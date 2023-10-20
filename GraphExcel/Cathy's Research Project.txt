@@ -1,0 +1,11 @@
+Cathy's Research Project:
+
+- Clean up Excel sheet so it is more readable
+- Create python script that will:
+   * Parse the Excel sheet for Diabetes data, Cholestral data, blood pressure data, who has a provider, who has insurance.
+   * Take this data and plot three graphs: Diabetes, Cholest., Blood Pressure
+       - Each graph should contain people who have providers and insurance, providers and no insurance, no provider or insurance.
+- Optional, create a GUI
+   * GUI should ask the user for an Excel sheet, allowing the user to browse computer for file
+   * There will be a button that will say analyze and once user clicks on it, will pass filepath to excel file and runs the python script
+   * Upon completion of the analysis, will display the three graphs for the user to see.
