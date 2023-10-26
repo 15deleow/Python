@@ -1,2 +1,6 @@
 FINAL 2023 Fiesta de Salud excel Report.xlsx
-__pycache__/
+**/__pycache__/
+build/
+pyinstaller/
+__pycache__/Graphs.cpython-311.pyc
+GraphExcel.spec
