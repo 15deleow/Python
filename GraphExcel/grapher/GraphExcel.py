@@ -1,15 +1,17 @@
 import sys
+import warnings
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from PyQt5.QtWidgets import *
 from PyQt5 import QtCore
 from Graphs import ExcelManager
 
+warnings.simplefilter('ignore', category=DeprecationWarning)
+
 class ExcelGraphApp(QWidget):
     def __init__(self):
         super().__init__()
         self.initUI()
-        self.excelManager = ExcelManager()
         self.fig, self.ax = plt.subplots()
         self.file = ""
         
@@ -129,11 +131,11 @@ class ExcelGraphApp(QWidget):
         # Create four new buttons and add them to the layout
         button_layout = QHBoxLayout()
         
-        for name in button_names:
-            button = QPushButton(name, self)
-            button.setStyleSheet("background-color: #FF8C42;")  # Fall color: orange
-            button.clicked.connect(lambda _, graph_type=name: self.generate_graph(graph_type))
-            button_layout.addWidget(button)
+        # for name in button_names:
+        #     button = QPushButton(name, self)
+        #     button.setStyleSheet("background-color: #FF8C42;")  # Fall color: orange
+        #     button.clicked.connect(lambda _, graph_type=name: self.generate_graph(graph_type))
+        #     button_layout.addWidget(button)
             
         restart_button = QPushButton('Restart', self)
         restart_button.setStyleSheet("background-color: #FF8C42;")  # Fall color: orange
@@ -181,26 +183,12 @@ class ExcelGraphApp(QWidget):
         self.file, _ = QFileDialog.getOpenFileName(self, "Select Excel File", "", "Excel Files (*.xlsx *.xls)", options=options)
 
         if self.file:
-            print(self.file)
             self.path_label.setText(f'Selected File: {self.file}')
+            self.excelManager = ExcelManager(self.file)
             
-    def generate_graph(self, graph_type = "Diabetes"):
-        if graph_type is None:
-            print("Invalid Graph Type")
-            return
-        
-        # Clear previous graph
-        self.clearGraph()
-        
+    def generate_graph(self):       
         # Based on the button pressed, analyze and generate graph
-        if graph_type == "Diabetes":
-            self.fig = self.excelManager.analyzeDiabetes(self.file)
-        elif graph_type == "Cholesterol":
-            self.fig = self.excelManager.analyzeCholesterol(self.file)
-        elif graph_type == "Blood Pressure":
-            self.fig = self.excelManager.analyzeBloodPressure(self.file)
-        else:
-            return  # Return if an invalid graph type is specified
+        self.fig = self.excelManager.generateComboGraph()
         
         # Create a canvas for the plot
         canvas = FigureCanvas(self.fig)
@@ -212,6 +200,9 @@ class ExcelGraphApp(QWidget):
         
         # Add the horizontal layout to the main layout
         self.main_layout.addWidget(canvas)
+        
+        # Develop the table
+        
         
     def clearGraph(self):
         # Clear any graphs displayed in the layout
