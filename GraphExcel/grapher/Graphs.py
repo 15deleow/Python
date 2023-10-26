@@ -103,7 +103,7 @@ class ExcelManager():
         
         # Define colors for each data set
         color1 = 'blue'
-        color2 = 'green'
+        color2 = 'red'
         
         # Set the width of the bars
         bar_width = 0.2
